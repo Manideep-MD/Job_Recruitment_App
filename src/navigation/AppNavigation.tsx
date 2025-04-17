@@ -4,6 +4,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {authScreensConfig} from './authScreensConfig';
 import {protectedScreensConfig} from './protectedScreensConfig';
 import {useSelector} from 'react-redux';
+import {SCREENS} from '../constants/screenNames';
+import JobCategory from '../screens/JobCategory/JobCategory';
+import Expertise from '../screens/Expertise/Expertise';
 // import SplashScreen from "react-native-splash-screen";
 
 const Stack = createStackNavigator();
@@ -29,14 +32,16 @@ const AppNavigation = () => {
             />
           ))}
 
-        {token &&
+        {/* {token &&
           protectedScreensConfig.map(screen => (
             <Stack.Screen
               key={screen.name}
               name={screen.name}
               component={screen.component}
             />
-          ))}
+          ))} */}
+        <Stack.Screen name={SCREENS.CATEGORY} component={JobCategory} />
+        <Stack.Screen name={SCREENS.EXPERTISE} component={Expertise} />
       </Stack.Navigator>
     </NavigationContainer>
   );

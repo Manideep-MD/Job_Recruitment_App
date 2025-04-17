@@ -6,5 +6,7 @@ export const SCREENS = {
   SAVED: 'saved',
   ANALYTICS: 'analytics',
   PROFILE: 'profile',
-  WELCOME:'welcome'
+  WELCOME:'welcome',
+  CATEGORY:'category',
+  EXPERTISE:'expertise'
 };

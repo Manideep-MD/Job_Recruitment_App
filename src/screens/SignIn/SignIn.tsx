@@ -41,7 +41,7 @@ const SignIn = () => {
       const response = await SignIn(values?.email, values?.password);
       if (response) {
         dispatch(SET_TOKEN(response?.user?._user?.uid));
-        navigation.navigate(SCREENS.BOTTOM_TAB);
+        navigation.navigate(SCREENS.CATEGORY);
       }
     } catch (error: any) {
       console.log(error, 'error---->');

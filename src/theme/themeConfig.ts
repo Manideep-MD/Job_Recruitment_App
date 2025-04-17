@@ -14,6 +14,7 @@ export interface ThemeColors {
   darkHover: string;
   darkActive: string;
   darker: string;
+  grey:string
 }
 
 export const lightTheme: ThemeColors = {
@@ -30,6 +31,7 @@ export const lightTheme: ThemeColors = {
   darkHover: '#1a0099',
   darkActive: '#130073',
   darker: '#0f0059',
+  grey:'#6C7278'
 };
 
 export const darkTheme: ThemeColors = {
@@ -46,6 +48,7 @@ export const darkTheme: ThemeColors = {
   darkHover: '#1a0099',
   darkActive: '#130073',
   darker: '#0f0059',
+  grey:'#6C7278'
 };
 
 export type ThemeColorKey = keyof ThemeColors;
