@@ -32,14 +32,14 @@ const AppNavigation = () => {
             />
           ))}
 
-        {/* {token &&
+        {token &&
           protectedScreensConfig.map(screen => (
             <Stack.Screen
               key={screen.name}
               name={screen.name}
               component={screen.component}
             />
-          ))} */}
+          ))}
         <Stack.Screen name={SCREENS.CATEGORY} component={JobCategory} />
         <Stack.Screen name={SCREENS.EXPERTISE} component={Expertise} />
       </Stack.Navigator>

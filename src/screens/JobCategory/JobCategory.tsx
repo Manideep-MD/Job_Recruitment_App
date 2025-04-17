@@ -80,6 +80,7 @@ const JobCategory = () => {
             return (
               <>
                 <Pressable
+                  key={item?.id}
                   style={{
                     width: 176,
                     height: 248,
