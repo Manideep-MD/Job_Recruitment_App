@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600236107752",
+    "project_id": "obrade-43836",
+    "storage_bucket": "obrade-43836.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600236107752:android:7549874f45039db0c3e65d",
+        "android_client_info": {
+          "package_name": "com.findit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuGFMxY3dmtS3pxUp5s06w0dlOW5GPXj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
