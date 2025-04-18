@@ -32,31 +32,7 @@ const Home = () => {
     handleJobsList();
   }, []);
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert('Exit App', 'Are you sure you want to exit?', [
-        {
-          text: 'Cancel',
-          onPress: () => null,
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => BackHandler.exitApp(),
-        },
-      ]);
-      return true; // prevents default behavior of back button
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => {
-      backHandler.remove();
-    };
-  }, []);
+  
 
   const handleJobsList = async () => {
     setLoading(true);

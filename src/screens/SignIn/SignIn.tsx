@@ -41,7 +41,10 @@ const SignIn = () => {
       const response = await SignIn(values?.email, values?.password);
       if (response) {
         dispatch(SET_TOKEN(response?.user?._user?.uid));
-        navigation.navigate(SCREENS.CATEGORY);
+        navigation.reset({
+          index: 0,
+          routes: [{name: SCREENS.CATEGORY}],
+        });
       }
     } catch (error: any) {
       console.log(error, 'error---->');

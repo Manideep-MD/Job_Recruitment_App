@@ -31,7 +31,6 @@ const AppNavigation = () => {
     }
   };
 
-  console.log(isProfileCompleted, 'isssssssssssssssss');
 
   return (
     <NavigationContainer

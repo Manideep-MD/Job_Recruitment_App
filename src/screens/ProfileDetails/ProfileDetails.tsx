@@ -42,13 +42,14 @@ const validationSchema = Yup.object().shape({
   profile_img: Yup.object().required('Profile Image is required'),
 });
 
-const ProfileDetails = () => {
+const ProfileDetails = ({route}) => {
   const {theme} = useCustomTheme();
   const styles = createStyles(theme);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const navigation = useNavigation<any>();
+  const routeScreen = route?.params?.routeName;
 
   const pickImage = async setFieldValue => {
     try {
@@ -74,12 +75,17 @@ const ProfileDetails = () => {
   };
 
   const handleDetails = (values: any) => {
-    console.log(values, 'values---------->');
     dispatch(saveProfile(values));
     dispatch(SET_PROFILE(true));
-    navigation.navigate(SCREENS.BOTTOM_TAB);
+    if (routeScreen == 'profile') {
+      navigation.navigate(SCREENS.BOTTOM_TAB);
+    } else {
+      navigation.reset({
+        index: 0,
+        routes: [{name: SCREENS.BOTTOM_TAB}],
+      });
+    }
   };
-
 
   return (
     <>

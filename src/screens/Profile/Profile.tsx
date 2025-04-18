@@ -36,7 +36,7 @@ const Profile = () => {
   };
 
   const NavigateProfile = () => {
-    navigation.navigate(SCREENS.PROFILE_DETAILS);
+    navigation.navigate(SCREENS.PROFILE_DETAILS,{routeName:'profile'});
   };
 
   return (

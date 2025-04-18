@@ -17,7 +17,7 @@ const Expertise = () => {
   const [development, setDevelopment] = useState(false);
 
   const handleSubmit = () => {
-    navigation.navigate(SCREENS.PROFILE_DETAILS);
+    navigation.navigate(SCREENS.PROFILE_DETAILS,{routeName:'expertise'});
   };
 
   return (
