@@ -5,6 +5,7 @@ import {ThemeColors} from '../../theme/themeConfig';
 import {useNavigation} from '@react-navigation/native';
 import {SCREENS} from '../../constants/screenNames';
 import {Checkbox} from 'react-native-ui-lib';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const Expertise = () => {
   const {theme} = useCustomTheme();
@@ -16,7 +17,7 @@ const Expertise = () => {
   const [development, setDevelopment] = useState(false);
 
   const handleSubmit = () => {
-    navigation.navigate(SCREENS.HOME);
+    navigation.navigate(SCREENS.PROFILE_DETAILS);
   };
 
   return (
@@ -47,7 +48,6 @@ const Expertise = () => {
             label="Business"
           />
         </View>
-
         <View style={styles.checkboxContainer}>
           <Checkbox
             value={communication}
@@ -116,13 +116,13 @@ const createStyles = (theme: ThemeColors) =>
 
     checkboxContainer: {
       marginBottom: 30,
-      width: 372,
+      width: widthPercentageToDP('90%'),
       height: 36,
       borderWidth: 1,
       borderColor: '#DDDDDD',
       justifyContent: 'center',
       paddingLeft: 10,
-      borderRadius:6.89
+      borderRadius: 6.89,
     },
     label: {
       marginLeft: 8,

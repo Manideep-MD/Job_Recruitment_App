@@ -8,5 +8,6 @@ export const SCREENS = {
   PROFILE: 'profile',
   WELCOME:'welcome',
   CATEGORY:'category',
-  EXPERTISE:'expertise'
+  EXPERTISE:'expertise',
+  PROFILE_DETAILS: 'profileDetails'
 };

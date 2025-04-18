@@ -163,13 +163,18 @@ const createStyles = (theme: ThemeColors) =>
     },
     inputContainer: {width: 327, height: 69, gap: 5},
     signInTextContainer: {width: 327, height: 84},
-    signInText: {fontSize: 32, fontWeight: 700, verticalAlign: 'middle'},
+    signInText: {
+      fontSize: 32,
+      fontWeight: '700',
+      verticalAlign: 'middle',
+      color: theme.text,
+    },
     mainImage: {width: 63.1, height: 88},
     secondImage: {width: 33, height: 32},
     imageContainer: {gap: 10, paddingBottom: 20},
     inputsContainer: {width: 327, height: 267, gap: 24, paddingTop: 10},
     forgotContainer: {alignItems: 'flex-end', width: 327},
-    forgotText: {fontSize: 12, fontWeight: 600, color: '#4D81E7'},
+    forgotText: {fontSize: 12, fontWeight: '600', color: '#4D81E7'},
     button: {
       width: 327,
       height: 48,
@@ -180,7 +185,7 @@ const createStyles = (theme: ThemeColors) =>
     },
     btnText: {
       color: theme.background,
-      fontWeight: 500,
+      fontWeight: '500',
       letterSpacing: -1,
     },
     label: {
@@ -188,7 +193,7 @@ const createStyles = (theme: ThemeColors) =>
     },
     linkText: {
       fontSize: 12,
-      fontWeight: 600,
+      fontWeight: '600',
       textAlign: 'center',
     },
   });

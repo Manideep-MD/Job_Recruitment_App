@@ -12,15 +12,31 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tokenReducer from '../reducers/tokenReducer';
+import savedJobsReducer from '../reducers/savedJobsReducer';
+import userReducer from '../reducers/userReducer';
 
 const authPersistConfig = {
   key: 'auth',
   storage: AsyncStorage,
-  whitelist: ['loginToken'],
+  whitelist: ['loginToken', 'isProfileCompleted'],
+};
+
+const jobsPersistConfig = {
+  key: 'savedJobs',
+  storage: AsyncStorage,
+  whitelist: ['jobs'],
+};
+
+const userPersistConfig = {
+  key: 'user',
+  storage: AsyncStorage,
+  whitelist: ['name', 'dob', 'email', 'mobile', 'gender', 'countryCode', 'profile_img'],
 };
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, tokenReducer),
+  savedJobs: persistReducer(jobsPersistConfig, savedJobsReducer),
+  user: persistReducer(userPersistConfig, userReducer),
 });
 
 const axiosMiddleware = (store: any) => (next: any) => async (action: any) => {
