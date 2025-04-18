@@ -1,22 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View, Image} from 'react-native';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 import ImagePicker from 'react-native-image-crop-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store/store';
 import {saveProfile} from '../../redux/reducers/userReducer';
-import {ThemeColors} from '../../theme/themeConfig';
 import {useCustomTheme} from '../../theme/ThemeContext';
 import {EMAIL_REGEX, MOBILE_REGEX} from '../../constants/Regex';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
@@ -25,8 +16,22 @@ import {useNavigation} from '@react-navigation/native';
 import {SCREENS} from '../../constants/screenNames';
 import {SET_PROFILE} from '../../redux/reducers/tokenReducer';
 import {dateFormatter} from '../../Utils/dateFormatHelper';
+import {createStyles} from './style';
 
-// Form Validation Schema
+interface FormValues {
+  name: string;
+  dob: string;
+  email: string;
+  mobile: string;
+  gender: string;
+  countryCode: string;
+  profile_img: {
+    uri: string;
+    type: string;
+    name: string;
+  } | null;
+}
+
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters')
@@ -42,15 +47,18 @@ const validationSchema = Yup.object().shape({
   profile_img: Yup.object().required('Profile Image is required'),
 });
 
-const ProfileDetails = () => {
+const ProfileDetails: React.FC = ({route}: any) => {
   const {theme} = useCustomTheme();
   const styles = createStyles(theme);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const navigation = useNavigation<any>();
+  const routeScreen = route?.params?.routeName;
 
-  const pickImage = async setFieldValue => {
+  const pickImage = async (
+    setFieldValue: (field: string, value: any) => void,
+  ) => {
     try {
       const image = await ImagePicker.openPicker({
         width: 300,
@@ -62,9 +70,9 @@ const ProfileDetails = () => {
       setFieldValue('profile_img', {
         uri: image.path,
         type: image.mime,
-        name: image.path.split('/').pop(),
+        name: image.path.split('/').pop() ?? 'profile.jpg',
       });
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'E_PICKER_CANCELLED') {
         console.log('User cancelled image picker');
       } else {
@@ -73,13 +81,18 @@ const ProfileDetails = () => {
     }
   };
 
-  const handleDetails = (values: any) => {
-    console.log(values, 'values---------->');
+  const handleDetails = (values: FormValues) => {
     dispatch(saveProfile(values));
     dispatch(SET_PROFILE(true));
-    navigation.navigate(SCREENS.BOTTOM_TAB);
+    if (routeScreen === 'profile') {
+      navigation.navigate(SCREENS.BOTTOM_TAB);
+    } else {
+      navigation.reset({
+        index: 0,
+        routes: [{name: SCREENS.BOTTOM_TAB}],
+      });
+    }
   };
-
 
   return (
     <>
@@ -140,13 +153,16 @@ const ProfileDetails = () => {
                 </View>
               </TouchableOpacity>
               {errors.profile_img && touched.profile_img && (
-                <Text style={styles.errorText}>{errors.profile_img}</Text>
+                <Text style={styles.errorText}>
+                  {errors.profile_img as string}
+                </Text>
               )}
 
               <TextInput
                 placeholder="Enter your name"
                 value={values.name}
                 onChangeText={handleChange('name')}
+                placeholderTextColor={theme.borderColor}
                 onBlur={handleBlur('name')}
                 style={styles.input}
               />
@@ -164,7 +180,7 @@ const ProfileDetails = () => {
                 </Text>
               </TouchableOpacity>
               {errors.dob && touched.dob && (
-                <Text style={styles.errorText}>{errors.dob}</Text>
+                <Text style={styles.errorText}>{errors.dob as string}</Text>
               )}
               <DatePicker
                 modal
@@ -182,6 +198,7 @@ const ProfileDetails = () => {
                 placeholder="Enter your email"
                 value={values.email}
                 onChangeText={handleChange('email')}
+                placeholderTextColor={theme.borderColor}
                 onBlur={handleBlur('email')}
                 keyboardType="email-address"
                 style={styles.input}
@@ -200,6 +217,7 @@ const ProfileDetails = () => {
                   placeholder="Mobile number"
                   value={values.mobile}
                   onChangeText={handleChange('mobile')}
+                  placeholderTextColor={theme.borderColor}
                   onBlur={handleBlur('mobile')}
                   keyboardType="phone-pad"
                   style={styles.mobileInput}
@@ -216,7 +234,7 @@ const ProfileDetails = () => {
                   onValueChange={itemValue =>
                     setFieldValue('gender', itemValue)
                   }
-                  style={{flex: 1}}>
+                  style={{flex: 1,color:theme.text}}>
                   <Picker.Item label="Select Gender" value="" />
                   <Picker.Item label="Male" value="male" />
                   <Picker.Item label="Female" value="female" />
@@ -231,10 +249,12 @@ const ProfileDetails = () => {
                 style={[
                   styles.button,
                   {
-                    backgroundColor: isButtonEnabled ? '#1D61E7' : '#ccc',
+                    backgroundColor: isButtonEnabled
+                      ? theme.buttonColor
+                      : theme.lightgrey,
                   },
                 ]}
-                onPress={handleSubmit}
+                onPress={handleSubmit as any}
                 disabled={!isButtonEnabled}>
                 <Text style={styles.buttonText}>Save Profile</Text>
               </TouchableOpacity>
@@ -247,88 +267,3 @@ const ProfileDetails = () => {
 };
 
 export default ProfileDetails;
-
-const createStyles = (theme: ThemeColors) =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      paddingTop: 50,
-      gap: 10,
-      backgroundColor: theme.background,
-      width: widthPercentageToDP('100%'),
-    },
-    input: {
-      width: widthPercentageToDP('90%'),
-      height: 44,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 8,
-      justifyContent: 'center',
-      paddingHorizontal: 10,
-      marginTop: 10,
-    },
-    mobileContainer: {
-      width: widthPercentageToDP('90%'),
-      height: 44,
-      flexDirection: 'row',
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 8,
-      overflow: 'hidden',
-      marginTop: 10,
-    },
-    countryCodeInput: {
-      width: 70,
-      height: '100%',
-      borderRightWidth: 1,
-      borderRightColor: '#ccc',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingHorizontal: 10,
-    },
-    mobileInput: {
-      flex: 1,
-      paddingHorizontal: 10,
-    },
-    button: {
-      width: widthPercentageToDP('90%'),
-      height: 48,
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    buttonText: {
-      color: theme.background,
-      fontWeight: '500',
-      letterSpacing: -1,
-    },
-    errorText: {
-      color: 'red',
-      fontSize: 12,
-      alignSelf: 'flex-start',
-      marginLeft: 20,
-    },
-    profileButton: {
-      marginBottom: 10,
-      position: 'relative',
-    },
-    previewProfileImage: {
-      width: 90,
-      height: 90,
-      borderRadius: 60,
-      backgroundColor: '#eee',
-    },
-    profilePictureEditIcon: {
-      position: 'absolute',
-      bottom: 0,
-      right: 5,
-      backgroundColor: theme.background,
-      borderRadius: 15,
-      padding: 5,
-      elevation: 5,
-    },
-    cameraIconText: {
-      fontSize: 16,
-    },
-  });

@@ -1,16 +1,9 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from 'react';
+import React, {createContext, useState, useContext, useCallback} from 'react';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import {REMOVE_TOKEN} from '../redux/reducers/tokenReducer';
 import {useDispatch} from 'react-redux';
 import {handleError} from '../Utils/errorHandler';
-import { useNavigation } from '@react-navigation/native';
 
 interface AuthContextProps {
   loading: boolean;
@@ -35,7 +28,6 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
       const response = await auth().signInWithEmailAndPassword(email, password);
 
       if (response) {
-        console.log(response, 'ressssssssssssss');
         Toast.show({
           type: 'success',
           text1: 'Success',

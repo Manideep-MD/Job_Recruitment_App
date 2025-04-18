@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ThemeProvider} from './src/theme/ThemeContext';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {Text} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import AppNavigation from './src/navigation/AppNavigation';
 import {Provider} from 'react-redux';
@@ -11,6 +11,32 @@ import {AuthProvider} from './src/context/AuthContext';
 import Toast from 'react-native-toast-message';
 
 const App = () => {
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Exit App', 'Are you sure you want to exit?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => BackHandler.exitApp(),
+        },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -20,7 +46,7 @@ const App = () => {
               <SafeAreaProvider>
                 <SafeAreaView style={{flex: 1}}>
                   <AppNavigation />
-                  <Toast/>
+                  <Toast />
                 </SafeAreaView>
               </SafeAreaProvider>
             </ThemeProvider>

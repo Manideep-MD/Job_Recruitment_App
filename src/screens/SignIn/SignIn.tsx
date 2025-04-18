@@ -1,24 +1,17 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {ThemeProvider, useCustomTheme} from '../../theme/ThemeContext';
-import {ThemeColors} from '../../theme/themeConfig';
+import {useCustomTheme} from '../../theme/ThemeContext';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import ErrorText from '../../components/ErrorText/ErrorText';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {SCREENS} from '../../constants/screenNames';
 import {EMAIL_REGEX} from '../../constants/Regex';
 import {useAuth} from '../../context/AuthContext';
 import {SET_TOKEN} from '../../redux/reducers/tokenReducer';
 import {useDispatch} from 'react-redux';
 import Loader from '../../components/Loader/Loader';
+import {createStyles} from './style';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -94,6 +87,7 @@ const SignIn = () => {
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     value={values.email}
+                    placeholderTextColor={theme.borderColor}
                     keyboardType="email-address"
                     autoCapitalize="none"
                   />
@@ -110,6 +104,7 @@ const SignIn = () => {
                     placeholder="Enter your password"
                     secureTextEntry
                     onChangeText={handleChange('password')}
+                    placeholderTextColor={theme.borderColor}
                     onBlur={handleBlur('password')}
                     value={values.password}
                   />
@@ -142,58 +137,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-const createStyles = (theme: ThemeColors) =>
-  StyleSheet.create({
-    container: {
-      width: '100%',
-      paddingTop: 40,
-      alignItems: 'center',
-      height: '100%',
-    },
-    input: {
-      width: 327,
-      height: 46,
-      borderWidth: 1,
-      borderRadius: 10,
-      paddingRight: 14,
-      paddingLeft: 14,
-      borderColor: '#6C7278',
-      color: theme.text,
-    },
-    inputContainer: {width: 327, height: 69, gap: 5},
-    signInTextContainer: {width: 327, height: 84},
-    signInText: {
-      fontSize: 32,
-      fontWeight: '700',
-      verticalAlign: 'middle',
-      color: theme.text,
-    },
-    mainImage: {width: 63.1, height: 88},
-    secondImage: {width: 33, height: 32},
-    imageContainer: {gap: 10, paddingBottom: 20},
-    inputsContainer: {width: 327, height: 267, gap: 24, paddingTop: 10},
-    forgotContainer: {alignItems: 'flex-end', width: 327},
-    forgotText: {fontSize: 12, fontWeight: '600', color: '#4D81E7'},
-    button: {
-      width: 327,
-      height: 48,
-      backgroundColor: '#1D61E7',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    btnText: {
-      color: theme.background,
-      fontWeight: '500',
-      letterSpacing: -1,
-    },
-    label: {
-      color: '#6C7278',
-    },
-    linkText: {
-      fontSize: 12,
-      fontWeight: '600',
-      textAlign: 'center',
-    },
-  });
