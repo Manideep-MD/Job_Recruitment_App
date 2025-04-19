@@ -22,6 +22,8 @@ const Home = () => {
   const user = useSelector((state: RootState) => state.user);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredJobs, setFilteredJobs] = useState<any>([]);
+  // const [page, setPage] = useState<number>(1);
+  // const [loadMore, setLoadMore] = useState<boolean>(true);
 
   useEffect(() => {
     handleJobsList();
@@ -62,9 +64,19 @@ const Home = () => {
     }
   };
 
+  // const handleLoadMore = () => {
+  //   if (!loading && loadMore) {
+  //     const nextPage = page + 1;
+  //     setPage(nextPage);
+  //     handleJobsList(nextPage, true);
+  //   }
+  // };
+
   const onRefresh = async () => {
     setRefreshing(true);
     try {
+      // setPage(1);
+      // setLoadMore(true);
       await handleJobsList();
     } catch (error) {
       console.log(error, 'refresh error');
@@ -167,6 +179,8 @@ const Home = () => {
           renderItem={renderJobs}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.flatListContent}
+          // onEndReached={handleLoadMore}
+          // onEndReachedThreshold={0.5}
         />
       </View>
 

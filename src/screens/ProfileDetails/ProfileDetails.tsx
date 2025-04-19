@@ -172,7 +172,7 @@ const ProfileDetails: React.FC = ({route}: any) => {
                     placeholder="Enter your name"
                     value={values.name}
                     onChangeText={handleChange('name')}
-                    placeholderTextColor={'#BBBBBB'}
+                    placeholderTextColor={theme.placeholderTextColor}
                     onBlur={handleBlur('name')}
                     style={styles.input}
                   />
@@ -214,7 +214,7 @@ const ProfileDetails: React.FC = ({route}: any) => {
                     placeholder="Enter your email"
                     value={values.email}
                     onChangeText={handleChange('email')}
-                    placeholderTextColor={'#BBBBBB'}
+                    placeholderTextColor={theme.placeholderTextColor}
                     onBlur={handleBlur('email')}
                     keyboardType="email-address"
                     style={styles.input}
@@ -237,7 +237,7 @@ const ProfileDetails: React.FC = ({route}: any) => {
                       placeholder="Mobile number"
                       value={values.mobile}
                       onChangeText={handleChange('mobile')}
-                      placeholderTextColor={'#BBBBBB'}
+                      placeholderTextColor={theme.placeholderTextColor}
                       onBlur={handleBlur('mobile')}
                       keyboardType="phone-pad"
                       style={styles.mobileInput}
