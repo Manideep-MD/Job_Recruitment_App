@@ -136,15 +136,14 @@ const createStyle = (theme: ThemeColors) =>
   StyleSheet.create({
     cardContainer: {
       width: wp('90%'),
-      // height: 234,
       borderRadius: 8,
       borderWidth: 1,
-      borderColor: theme.borderColor,
+      borderColor: '#E4E5E8',
       gap: 8,
       padding: 10,
     },
     font: {
-      color: theme.borderColor,
+      color: theme.cardDescriptionText,
     },
     headerContainer: {
       width: wp('82%'),
@@ -174,7 +173,7 @@ const createStyle = (theme: ThemeColors) =>
     headerText: {
       fontSize: 16,
       fontWeight: 500,
-      color: theme.borderColor,
+      color: theme.text,
     },
     detailsRow: {
       width: 300,
@@ -195,7 +194,7 @@ const createStyle = (theme: ThemeColors) =>
       fontSize: 14,
       fontWeight: '400',
       width: wp('80%'),
-      color: theme.borderColor,
+      color: theme.cardDescriptionText,
     },
     dateContainer: {
       alignItems: 'flex-end',

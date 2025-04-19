@@ -19,7 +19,7 @@ const CustomHeader: React.FC<HeaderProps> = ({title}) => {
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="#000" />
+        <Ionicons name="arrow-back" size={27} color="#000" />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View>
@@ -44,7 +44,7 @@ const createStyles = (theme: ThemeColors) =>
       zIndex: 1,
     },
     title: {
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 'bold',
       color: theme.text,
       textAlign: 'center',

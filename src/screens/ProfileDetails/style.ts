@@ -11,7 +11,10 @@ export const createStyles = (theme: ThemeColors) =>
       gap: 20,
       backgroundColor: theme.background,
       width: wp('100%'),
+      height:'100%'
     },
+    inputContainer: {width: wp('90%'), height: 69, gap: 5},
+    errorContainer:{paddingLeft: 10},
     input: {
       width: wp('90%'),
       height: 44,
@@ -21,7 +24,7 @@ export const createStyles = (theme: ThemeColors) =>
       justifyContent: 'center',
       paddingHorizontal: 10,
       marginTop: 10,
-      color:theme.text
+      color: theme.text,
     },
     mobileContainer: {
       width: wp('90%'),
@@ -30,23 +33,21 @@ export const createStyles = (theme: ThemeColors) =>
       borderWidth: 1,
       borderColor: theme.borderColor,
       borderRadius: 8,
-      overflow: 'hidden',
       marginTop: 10,
     },
     countryCodeInput: {
       width: 70,
-      height: '100%',
       borderRightWidth: 1,
       borderRightColor: theme.borderColor,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 10,
-      color:theme.text
+      color: theme.text,
+      paddingHorizontal:20
     },
     mobileInput: {
       flex: 1,
       paddingHorizontal: 10,
-      color:theme.text
+      color: theme.text,
     },
     button: {
       width: wp('90%'),

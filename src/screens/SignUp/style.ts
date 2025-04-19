@@ -30,7 +30,7 @@ export const createStyles = (theme: ThemeColors) =>
     mainImage: {width: 63.1, height: 88},
     secondImage: {width: 33, height: 32},
     imageContainer: {gap: 10, paddingBottom: 20},
-    inputsContainer: {width: 327, height: 267, gap: 24},
+    inputsContainer: {width: 327, height: 267, gap: 30},
     forgotContainer: {alignItems: 'flex-end', width: 327},
     forgotText: {fontSize: 12, fontWeight: 600, color: theme.lightBlue},
     button: {
@@ -47,7 +47,7 @@ export const createStyles = (theme: ThemeColors) =>
       letterSpacing: -1,
     },
     label: {
-      color: theme.borderColor,
+      color: theme.cardDescriptionText,
     },
     linkText: {
       fontSize: 12,

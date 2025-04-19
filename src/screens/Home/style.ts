@@ -39,7 +39,7 @@ export const createStyles = (theme: ThemeColors) =>
       fontSize: 16,
       fontWeight: 400,
       letterSpacing: 1,
-      color: theme.borderColor,
+      color: theme.text,
     },
     nameText: {
       fontSize: 17,
@@ -55,6 +55,16 @@ export const createStyles = (theme: ThemeColors) =>
       borderColor: theme.borderColor,
       justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative',
+    },
+    indicator: {
+      backgroundColor: 'red',
+      width: 8,
+      height: 8,
+      borderRadius: 50,
+      position: 'absolute',
+      top: 4,
+      right: 5,
     },
     searchFilterWrapper: {
       flexDirection: 'row',

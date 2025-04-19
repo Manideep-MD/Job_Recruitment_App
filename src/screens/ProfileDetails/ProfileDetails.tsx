@@ -1,4 +1,11 @@
-import {Text, TextInput, TouchableOpacity, View, Image} from 'react-native';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
@@ -17,6 +24,7 @@ import {SCREENS} from '../../constants/screenNames';
 import {SET_PROFILE} from '../../redux/reducers/tokenReducer';
 import {dateFormatter} from '../../Utils/dateFormatHelper';
 import {createStyles} from './style';
+import ErrorText from '../../components/ErrorText/ErrorText';
 
 interface FormValues {
   name: string;
@@ -97,171 +105,187 @@ const ProfileDetails: React.FC = ({route}: any) => {
   return (
     <>
       <CustomHeader title={user?.name ? 'Profile' : 'Complete Profile'} />
-      <Formik
-        enableReinitialize
-        initialValues={{
-          name: user.name || '',
-          dob: user.dob || '',
-          email: user.email || '',
-          mobile: user.mobile || '',
-          gender: user.gender || '',
-          countryCode: user.countryCode || '+91',
-          profile_img: user.profile_img || null,
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleDetails}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-          setFieldValue,
-          isValid,
-        }) => {
-          const isFormFilled =
-            values.name &&
-            values.dob &&
-            values.email &&
-            values.mobile &&
-            values.gender &&
-            values.profile_img;
+      <ScrollView>
+        <Formik
+          enableReinitialize
+          initialValues={{
+            name: user.name || '',
+            dob: user.dob || '',
+            email: user.email || '',
+            mobile: user.mobile || '',
+            gender: user.gender || '',
+            countryCode: user.countryCode || '+91',
+            profile_img: user.profile_img || null,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleDetails}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            setFieldValue,
+            isValid,
+          }) => {
+            const isFormFilled =
+              values.name &&
+              values.dob &&
+              values.email &&
+              values.mobile &&
+              values.gender &&
+              values.profile_img;
 
-          const isButtonEnabled = isValid && isFormFilled;
+            const isButtonEnabled = isValid && isFormFilled;
 
-          return (
-            <View style={styles.container}>
-              <TouchableOpacity
-                style={styles.profileButton}
-                onPress={() => pickImage(setFieldValue)}>
-                {values.profile_img ? (
-                  <Image
-                    source={{uri: values.profile_img.uri}}
-                    style={styles.previewProfileImage}
-                  />
-                ) : (
-                  <Image
-                    source={{
-                      uri: 'https://img.freepik.com/premium-photo/default-male-user-icon-blank-profile-image-green-background-profile-picture-icon_962764-98397.jpg?w=826',
-                    }}
-                    style={styles.previewProfileImage}
-                  />
+            return (
+              <View style={styles.container}>
+                <TouchableOpacity
+                  style={styles.profileButton}
+                  onPress={() => pickImage(setFieldValue)}>
+                  {values.profile_img ? (
+                    <Image
+                      source={{uri: values.profile_img.uri}}
+                      style={styles.previewProfileImage}
+                    />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: 'https://img.freepik.com/premium-photo/default-male-user-icon-blank-profile-image-green-background-profile-picture-icon_962764-98397.jpg?w=826',
+                      }}
+                      style={styles.previewProfileImage}
+                    />
+                  )}
+                  <View style={styles.profilePictureEditIcon}>
+                    <Feather name="edit" color={theme.text} size={15} />
+                  </View>
+                </TouchableOpacity>
+                {errors.profile_img && touched.profile_img && (
+                  <Text style={styles.errorText}>
+                    {errors.profile_img as string}
+                  </Text>
                 )}
-                <View style={styles.profilePictureEditIcon}>
-                  <Feather name="edit" color={theme.text} size={15} />
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Enter your name"
+                    value={values.name}
+                    onChangeText={handleChange('name')}
+                    placeholderTextColor={'#BBBBBB'}
+                    onBlur={handleBlur('name')}
+                    style={styles.input}
+                  />
+                  {errors.name && touched.name && (
+                    <View style={styles.errorContainer}>
+                      <ErrorText text={errors?.name} />
+                    </View>
+                  )}
                 </View>
-              </TouchableOpacity>
-              {errors.profile_img && touched.profile_img && (
-                <Text style={styles.errorText}>
-                  {errors.profile_img as string}
-                </Text>
-              )}
 
-              <TextInput
-                placeholder="Enter your name"
-                value={values.name}
-                onChangeText={handleChange('name')}
-                placeholderTextColor={theme.borderColor}
-                onBlur={handleBlur('name')}
-                style={styles.input}
-              />
-              {errors.name && touched.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
-              )}
-
-              <TouchableOpacity
-                style={styles.input}
-                onPress={() => setOpen(true)}>
-                <Text style={{color: values.dob ? '#000' : '#999'}}>
-                  {values.dob
-                    ? dateFormatter(values.dob)
-                    : 'Select Date of Birth'}
-                </Text>
-              </TouchableOpacity>
-              {errors.dob && touched.dob && (
-                <Text style={styles.errorText}>{errors.dob as string}</Text>
-              )}
-              <DatePicker
-                modal
-                mode="date"
-                open={open}
-                date={values.dob ? new Date(values.dob) : new Date()}
-                onConfirm={date => {
-                  setOpen(false);
-                  setFieldValue('dob', date.toISOString());
-                }}
-                onCancel={() => setOpen(false)}
-              />
-
-              <TextInput
-                placeholder="Enter your email"
-                value={values.email}
-                onChangeText={handleChange('email')}
-                placeholderTextColor={theme.borderColor}
-                onBlur={handleBlur('email')}
-                keyboardType="email-address"
-                style={styles.input}
-              />
-              {errors.email && touched.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-
-              <View style={styles.mobileContainer}>
-                <TextInput
-                  value={values.countryCode}
-                  editable={false}
-                  style={styles.countryCodeInput}
+                <TouchableOpacity
+                  style={styles.input}
+                  onPress={() => setOpen(true)}>
+                  <Text style={{color: values.dob ? '#000' : '#999'}}>
+                    {values.dob
+                      ? dateFormatter(values.dob)
+                      : 'Select Date of Birth'}
+                  </Text>
+                </TouchableOpacity>
+                {errors.dob && touched.dob && (
+                  <View style={styles.errorContainer}>
+                    <ErrorText text={errors?.dob} />
+                  </View>
+                )}
+                <DatePicker
+                  modal
+                  mode="date"
+                  open={open}
+                  date={values.dob ? new Date(values.dob) : new Date()}
+                  onConfirm={date => {
+                    setOpen(false);
+                    setFieldValue('dob', date.toISOString());
+                  }}
+                  onCancel={() => setOpen(false)}
                 />
-                <TextInput
-                  placeholder="Mobile number"
-                  value={values.mobile}
-                  onChangeText={handleChange('mobile')}
-                  placeholderTextColor={theme.borderColor}
-                  onBlur={handleBlur('mobile')}
-                  keyboardType="phone-pad"
-                  style={styles.mobileInput}
-                  maxLength={10}
-                />
-              </View>
-              {errors.mobile && touched.mobile && (
-                <Text style={styles.errorText}>{errors.mobile}</Text>
-              )}
 
-              <View style={styles.input}>
-                <Picker
-                  selectedValue={values.gender}
-                  onValueChange={itemValue =>
-                    setFieldValue('gender', itemValue)
-                  }
-                  style={{flex: 1,color:theme.text}}>
-                  <Picker.Item label="Select Gender" value="" />
-                  <Picker.Item label="Male" value="male" />
-                  <Picker.Item label="Female" value="female" />
-                  <Picker.Item label="Other" value="other" />
-                </Picker>
-              </View>
-              {errors.gender && touched.gender && (
-                <Text style={styles.errorText}>{errors.gender}</Text>
-              )}
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Enter your email"
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    placeholderTextColor={'#BBBBBB'}
+                    onBlur={handleBlur('email')}
+                    keyboardType="email-address"
+                    style={styles.input}
+                  />
+                  {errors.email && touched.email && (
+                    <View style={styles.errorContainer}>
+                      <ErrorText text={errors?.email} />
+                    </View>
+                  )}
+                </View>
 
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor: isButtonEnabled
-                      ? theme.buttonColor
-                      : theme.lightgrey,
-                  },
-                ]}
-                onPress={handleSubmit as any}
-                disabled={!isButtonEnabled}>
-                <Text style={styles.buttonText}>Save Profile</Text>
-              </TouchableOpacity>
-            </View>
-          );
-        }}
-      </Formik>
+                <View style={styles.inputContainer}>
+                  <View style={styles.mobileContainer}>
+                    <TextInput
+                      value={values.countryCode}
+                      editable={false}
+                      style={styles.countryCodeInput}
+                    />
+                    <TextInput
+                      placeholder="Mobile number"
+                      value={values.mobile}
+                      onChangeText={handleChange('mobile')}
+                      placeholderTextColor={'#BBBBBB'}
+                      onBlur={handleBlur('mobile')}
+                      keyboardType="phone-pad"
+                      style={styles.mobileInput}
+                      maxLength={10}
+                    />
+                  </View>
+                  {errors.mobile && touched.mobile && (
+                    <View style={styles.errorContainer}>
+                      <ErrorText text={errors?.mobile} />
+                    </View>
+                  )}
+                </View>
+
+                <View style={styles.input}>
+                  <Picker
+                    selectedValue={values.gender}
+                    onValueChange={itemValue =>
+                      setFieldValue('gender', itemValue)
+                    }
+                    style={{flex: 1, color: theme.text}}>
+                    <Picker.Item label="Select Gender" value="" />
+                    <Picker.Item label="Male" value="male" />
+                    <Picker.Item label="Female" value="female" />
+                    <Picker.Item label="Other" value="other" />
+                  </Picker>
+                </View>
+                {errors.gender && touched.gender && (
+                  <Text style={styles.errorText}>{errors.gender}</Text>
+                )}
+
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: isButtonEnabled
+                        ? theme.buttonColor
+                        : theme.lightgrey,
+                    },
+                  ]}
+                  onPress={handleSubmit as any}
+                  disabled={!isButtonEnabled}>
+                  <Text style={styles.buttonText}>Save Profile</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        </Formik>
+      </ScrollView>
     </>
   );
 };

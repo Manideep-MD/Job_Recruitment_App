@@ -1,12 +1,6 @@
 // components/CustomFastImage/CustomFastImage.tsx
 import React, {useState} from 'react';
-import {
-  ActivityIndicator,
-  ImageStyle,
-  StyleProp,
-  View,
-  StyleSheet,
-} from 'react-native';
+import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useCustomTheme} from '../../theme/ThemeContext';
 
@@ -21,7 +15,7 @@ const CustomFastImage: React.FC = ({
   const isUri = source && source.uri;
 
   return (
-    <View style={[style, styles.wrapper]}>
+    <View style={[styles.wrapper, style]}>
       {loading && (
         <View style={styles.loader}>
           <ActivityIndicator size="small" color={theme.darkBlue} />
@@ -33,8 +27,9 @@ const CustomFastImage: React.FC = ({
             ? {uri: source.uri, priority: FastImage.priority.normal}
             : source
         }
-        style={style}
+        style={[StyleSheet.absoluteFill, style]}
         resizeMode={resizeMode}
+        onLoadStart={() => setLoading(true)}
         onLoadEnd={() => setLoading(false)}
         onError={() => setLoading(false)}
         {...rest}
@@ -49,9 +44,10 @@ const styles = StyleSheet.create({
   wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   loader: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 2,
   },
 });

@@ -113,6 +113,7 @@ const Home = () => {
                 size={23}
                 color={theme.text}
               />
+              <View style={styles.indicator}></View>
             </View>
           </View>
         </View>
@@ -120,13 +121,13 @@ const Home = () => {
         <View style={styles.searchFilterWrapper}>
           <View style={styles.searchWrapper}>
             <View style={styles.searchIconWrapper}>
-              <AntDesign name="search1" size={24} color={theme.borderColor} />
+              <AntDesign name="search1" size={24} color={'#BBBBBB'} />
             </View>
             <TextInput
               value={searchQuery}
               onChangeText={handleSearch}
               placeholder="Search jobs..."
-              placeholderTextColor={theme.borderColor}
+              placeholderTextColor={'#BBBBBB'}
               style={styles.searchInput}
             />
           </View>

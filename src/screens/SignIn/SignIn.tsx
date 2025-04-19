@@ -87,7 +87,7 @@ const SignIn = () => {
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     value={values.email}
-                    placeholderTextColor={theme.borderColor}
+                    placeholderTextColor={theme.placeholderTextColor}
                     keyboardType="email-address"
                     autoCapitalize="none"
                   />
@@ -104,7 +104,7 @@ const SignIn = () => {
                     placeholder="Enter your password"
                     secureTextEntry
                     onChangeText={handleChange('password')}
-                    placeholderTextColor={theme.borderColor}
+                    placeholderTextColor={theme.placeholderTextColor}
                     onBlur={handleBlur('password')}
                     value={values.password}
                   />

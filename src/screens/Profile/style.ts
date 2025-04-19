@@ -34,7 +34,8 @@ export const createStyles = (theme: ThemeColors) =>
     sectionsWrapper: {
       width: wp('100%'),
       height: 376,
-      alignItems:'center'
+      alignItems:'center',
+      gap:20
     },
     section: {
       gap: 10,
@@ -71,9 +72,9 @@ export const createStyles = (theme: ThemeColors) =>
       fontWeight: '400',
     },
     logoutButton: {
-      // paddingTop: hp('5%'),
+      marginTop: '7%',
       width: '30%',
-      height: 40,
+      height: 60,
     },
     logoutText: {
       color: theme.lightgrey,
