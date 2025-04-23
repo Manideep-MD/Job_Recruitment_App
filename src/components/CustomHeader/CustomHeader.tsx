@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useCustomTheme} from '../../theme/ThemeContext';
 import {ThemeColors} from '../../theme/themeConfig';
@@ -19,11 +19,9 @@ const CustomHeader: React.FC<HeaderProps> = ({title}) => {
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="#000" />
+        <Ionicons name="arrow-back" size={27} color="#000" />
       </TouchableOpacity>
-      <View style={{width:'80%'}}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
 };
@@ -35,18 +33,20 @@ const createStyles = (theme: ThemeColors) =>
     header: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: theme.background,
-      padding: 15,
+      justifyContent: 'center',
       height: 60,
+      backgroundColor: theme.background,
+      position: 'relative',
     },
     backButton: {
-      // padding: 10,
+      position: 'absolute',
+      left: 15,
+      zIndex: 1,
     },
     title: {
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 'bold',
-      color: '#000',
-      marginLeft: 10,
+      color: theme.text,
       textAlign: 'center',
     },
   });

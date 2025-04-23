@@ -17,7 +17,9 @@ import StarRating from 'react-native-star-rating-widget';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeJob, saveJob} from '../../redux/reducers/savedJobsReducer';
 import {RootState} from '../../redux/store/store';
-import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {ThemeColors} from '../../theme/themeConfig';
+import CustomFastImage from '../CustomFastImage/CustomFastImage';
 
 interface JobItem {
   id: number;
@@ -39,6 +41,7 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({item}) => {
   const {theme} = useCustomTheme();
+  const styles = createStyle(theme);
   const dispatch = useDispatch();
 
   const savedJobs = useSelector((state: RootState) => state.savedJobs.jobs);
@@ -57,7 +60,7 @@ const JobCard: React.FC<JobCardProps> = ({item}) => {
       <View style={styles.headerContainer}>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.imageWrapper}>
-            <Image
+            <CustomFastImage
               source={{uri: item?.image}}
               style={styles.image}
               resizeMode="center"
@@ -82,7 +85,11 @@ const JobCard: React.FC<JobCardProps> = ({item}) => {
         </View>
         <TouchableOpacity onPress={handleBookmarkToggle}>
           {isSaved ? (
-            <FontAwesome name="bookmark" size={30} color="#3270E9" />
+            <FontAwesome
+              name="bookmark"
+              size={30}
+              color={theme.lightBlueHover}
+            />
           ) : (
             <FontAwesome name="bookmark-o" size={30} color={theme.text} />
           )}
@@ -96,19 +103,19 @@ const JobCard: React.FC<JobCardProps> = ({item}) => {
       <View style={styles.detailsRow}>
         <View style={styles.detailItem}>
           <EvilIcons name="location" size={16} color={theme.grey} />
-          <Text>{item?.location}</Text>
+          <Text style={styles.font}>{item?.location}</Text>
         </View>
         <View style={styles.detailItem}>
           <Ionicons name="time-outline" size={16} color={theme.grey} />
-          <Text>{item?.jobtype}</Text>
+          <Text style={styles.font}>{item?.jobtype}</Text>
         </View>
         <View style={styles.detailItem}>
           <Foundation name="dollar" size={22} color={theme.grey} />
-          <Text>{item?.salary}</Text>
+          <Text style={styles.font}>{item?.salary}</Text>
         </View>
         <View style={styles.detailItem}>
           <MaterialIcons name="date-range" size={22} color={theme.grey} />
-          <Text style={styles.timeAgoText}>{item?.time} min ago</Text>
+          <Text style={styles.font}>{item?.time} min ago</Text>
         </View>
       </View>
 
@@ -125,72 +132,78 @@ const JobCard: React.FC<JobCardProps> = ({item}) => {
 
 export default React.memo(JobCard);
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    width: wp('90%'),
-    // height: 234,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E4E5E8',
-    gap: 8,
-    padding: 10,
-  },
-  headerContainer: {
-    width: wp('82%'),
-    height: 44,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  imageWrapper: {
-    width: 44,
-    height: 44,
-  },
-  image: {
-    width: 44,
-    height: 44,
-  },
-  titleContainer: {
-    width: 170,
-    height: 44,
-    gap: 8,
-  },
-  titleText: {
-    fontSize: 14,
-    fontWeight: '400',
-    paddingLeft: 10,
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  detailsRow: {
-    width: 300,
-    height: 22,
-    flexDirection: 'row',
-    gap: 10,
-  },
-  detailItem: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 5,
-  },
-  timeAgoText: {
-    fontSize: 12,
-  },
-  descriptionText: {
-    fontSize: 14,
-    fontWeight: '400',
-    width: wp('80%'),
-  },
-  dateContainer: {
-    alignItems: 'flex-end',
-    width: wp('89%'),
-    paddingRight: 16,
-  },
-  dateText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#3975EA',
-  },
-});
+const createStyle = (theme: ThemeColors) =>
+  StyleSheet.create({
+    cardContainer: {
+      width: wp('90%'),
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: '#E4E5E8',
+      gap: 8,
+      padding: 10,
+    },
+    font: {
+      color: theme.cardDescriptionText,
+    },
+    headerContainer: {
+      width: wp('82%'),
+      height: 44,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    imageWrapper: {
+      width: 44,
+      height: 44,
+    },
+    image: {
+      width: 44,
+      height: 44,
+    },
+    titleContainer: {
+      width: 170,
+      height: 44,
+      gap: 8,
+    },
+    titleText: {
+      fontSize: 14,
+      fontWeight: 400,
+      paddingLeft: 10,
+      color: theme.text,
+    },
+    headerText: {
+      fontSize: 16,
+      fontWeight: 500,
+      color: theme.text,
+    },
+    detailsRow: {
+      width: 300,
+      height: 22,
+      flexDirection: 'row',
+      gap: 10,
+    },
+    detailItem: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 5,
+    },
+    timeAgoText: {
+      fontSize: 12,
+    },
+    descriptionText: {
+      fontSize: 14,
+      fontWeight: '400',
+      width: wp('80%'),
+      color: theme.cardDescriptionText,
+    },
+    dateContainer: {
+      alignItems: 'flex-end',
+      width: wp('89%'),
+      paddingRight: 16,
+    },
+    dateText: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: theme.darkBlue,
+    },
+  });

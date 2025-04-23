@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {ThemeProvider} from './src/theme/ThemeContext';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {Alert, BackHandler, Text} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import AppNavigation from './src/navigation/AppNavigation';
 import {Provider} from 'react-redux';
@@ -11,7 +11,6 @@ import {AuthProvider} from './src/context/AuthContext';
 import Toast from 'react-native-toast-message';
 
 const App = () => {
-
   useEffect(() => {
     const backAction = () => {
       Alert.alert('Exit App', 'Are you sure you want to exit?', [
@@ -25,7 +24,7 @@ const App = () => {
           onPress: () => BackHandler.exitApp(),
         },
       ]);
-      return true; 
+      return true;
     };
 
     const backHandler = BackHandler.addEventListener(
@@ -47,7 +46,7 @@ const App = () => {
               <SafeAreaProvider>
                 <SafeAreaView style={{flex: 1}}>
                   <AppNavigation />
-                  <Toast/>
+                  <Toast />
                 </SafeAreaView>
               </SafeAreaProvider>
             </ThemeProvider>

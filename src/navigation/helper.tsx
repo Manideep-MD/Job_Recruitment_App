@@ -40,7 +40,7 @@ export const renderTabIcon = (
     <IconComponent
       name={iconName}
       size={24}
-      color={focused ? theme?.normalHover : theme.text}
+      color={focused ? theme?.darkBlue : theme.text}
     />
   );
 };

@@ -15,7 +15,7 @@ const Loader = () => {
       onRequestClose={() => {}}>
       <View style={styles.overlay}>
         <View style={styles.loaderContainer}>
-          <ActivityIndicator size="large" color={theme.darkActive} />
+          <ActivityIndicator size="large" color={theme.darkBlue} />
           <Text style={styles.text}>Please Wait</Text>
         </View>
       </View>

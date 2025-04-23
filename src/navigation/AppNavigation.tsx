@@ -9,8 +9,6 @@ import JobCategory from '../screens/JobCategory/JobCategory';
 import Expertise from '../screens/Expertise/Expertise';
 import ProfileDetails from '../screens/ProfileDetails/ProfileDetails';
 
-// import SplashScreen from "react-native-splash-screen";
-
 const Stack = createStackNavigator();
 
 const AppNavigation = () => {
@@ -50,13 +48,14 @@ const AppNavigation = () => {
           />
         ))}
 
-        {token && protectedScreensConfig.map(screen => (
-          <Stack.Screen
-            key={screen.name}
-            name={screen.name}
-            component={screen.component}
-          />
-        ))}
+        {token &&
+          protectedScreensConfig.map(screen => (
+            <Stack.Screen
+              key={screen.name}
+              name={screen.name}
+              component={screen.component}
+            />
+          ))}
         <Stack.Screen name={SCREENS.CATEGORY} component={JobCategory} />
         <Stack.Screen name={SCREENS.EXPERTISE} component={Expertise} />
         <Stack.Screen
